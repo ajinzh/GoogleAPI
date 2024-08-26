@@ -1,0 +1,31 @@
+#at the first you should get API KEY and ENGINE ID form Google Search JSON API webseite, it's free for all the students
+#then you should in pycharm install requests-- pip install requests
+
+import requests
+
+# API KEY UND ID
+API_KEY = 'input your API key'
+SEARCH_ENGINE_ID = 'input your ID'
+
+def google_search(query, api_key, cse_id, **kwargs):
+    url = "https://www.googleapis.com/customsearch/v1"
+    params = {
+        'q': query,
+        'key': api_key,
+        'cx': cse_id,
+    }
+    params.update(kwargs)
+    response = requests.get(url, params=params)
+    return response.json()
+
+# alle GmbH or another Informations you want to search
+
+results = google_search("site:which u want to search", API_KEY, SEARCH_ENGINE_ID)
+
+# print the results
+
+for item in results.get('items', []):
+    print(f"Title: {item['title']}")
+    print(f"Link: {item['link']}")
+    print(f"Snippet: {item['snippet']}")
+    print()
